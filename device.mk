@@ -40,9 +40,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.debug.alloc=0
 	
 # Carrier Info
-CDMA_GOOGLE_BASE := android-virgin-us
-CDMA_CARRIER_ALPHA := Virgin_Mobile
-CDMA_CARRIER_NUMERIC := 311490
+#CDMA_GOOGLE_BASE := android-virgin-us
+#CDMA_CARRIER_ALPHA := Virgin_Mobile
+#CDMA_CARRIER_NUMERIC := 311490
 
 # Property Overides for carrier
 PRODUCT_PROPERTY_OVERRIDES += \
