@@ -59,12 +59,12 @@ postprocess.denoise_level=5
 ro.camera.sound.disabled=1
 
 # USB Mounting
-persist.sys.usb.config=mass_storage,adb
+persist.sys.usb.config=mass_storage,adb,mtp
 
 dalvik.vm.dexopt-data-only=1
 
 # Hardware Info
-ro.device.chipset=Qualcomm Snapdragon MSM8655
+ro.device.chipset=Qualcomm Snapdragon MSM8255
 ro.device.gpu=Adreno 205
 ro.device.front_cam=Not available
 ro.device.rear_cam=5 Megapixels
