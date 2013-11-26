@@ -1,5 +1,5 @@
 #
-# system.prop for primoc
+# system.prop for primou
 #
 
 #qcom display
@@ -69,3 +69,6 @@ ro.device.gpu=Adreno 205
 ro.device.front_cam=Not available
 ro.device.rear_cam=5 Megapixels
 ro.device.screen_res=480x800
+
+# adb service 
+persist.adb.notify=0
