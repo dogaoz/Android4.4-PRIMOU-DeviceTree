@@ -23,6 +23,11 @@
 # WARNING: This line must come *before* including the proprietary
 # variant, so that it gets overwritten by the parent (which goes
 # against the traditional rules of inheritance).
+
+#msm7x30 stuff
+
+TARGET_SPECIFIC_HEADER_PATH := device/htc/msm7x30-common/include
+
 USE_CAMERA_STUB := true
 
 # inherit from common msm7x30
@@ -71,9 +76,9 @@ BOARD_FLASH_BLOCK_SIZE := 262144
 TARGET_RELEASETOOLS_EXTENSIONS := device/htc/common
 
 # Kernel
-TARGET_KERNEL_SOURCE := kernel/htc/primou
-TARGET_KERNEL_CONFIG := primou_defconfig
-#TARGET_PREBUILT_KERNEL := device/htc/primou/prebuilt/root/kernel
+#TARGET_KERNEL_SOURCE := kernel/htc/primou
+#TARGET_KERNEL_CONFIG := primou_defconfig
+TARGET_PREBUILT_KERNEL := device/htc/primou/prebuilt/root/kernel
 #BUILD_KERNEL := true
 #TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.4.3
 
