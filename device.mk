@@ -67,6 +67,7 @@ PRODUCT_PACKAGES += \
     e2fsck \
     setup_fs
 
+
 # Input device config
 PRODUCT_COPY_FILES += \
     device/htc/primou/idc/himax-touchscreen.idc:system/usr/idc/himax-touchscreen.idc \
