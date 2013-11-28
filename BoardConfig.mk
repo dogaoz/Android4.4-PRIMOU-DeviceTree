@@ -26,7 +26,8 @@
 
 #msm7x30 stuff
 
-TARGET_SPECIFIC_HEADER_PATH := device/htc/msm7x30-common/include
+# TARGET_SPECIFIC_HEADER_PATH := device/htc/msm7x30-common/include
+PRODUCT_VENDOR_KERNEL_HEADERS := device/htc/msm7x30-common/kernel-headers/
 
 USE_CAMERA_STUB := true
 
