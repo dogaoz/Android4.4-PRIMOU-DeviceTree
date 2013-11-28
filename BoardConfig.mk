@@ -78,7 +78,7 @@ TARGET_RELEASETOOLS_EXTENSIONS := device/htc/common
 
 # Kernel
 TARGET_KERNEL_SOURCE := kernel/htc/primou
-TARGET_KERNEL_CONFIG := hellboy_defconfig
+TARGET_KERNEL_CONFIG := primou_defconfig
 #TARGET_PREBUILT_KERNEL := device/htc/primou/prebuilt/root/kernel
 #BUILD_KERNEL := true
 #TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.4.3
