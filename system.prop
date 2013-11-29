@@ -59,7 +59,7 @@ postprocess.denoise_level=5
 ro.camera.sound.disabled=1
 
 # USB Mounting
-persist.sys.usb.config=mass_storage,adb,mtp
+persist.sys.usb.config=mass_storage,adb
 
 dalvik.vm.dexopt-data-only=1
 
@@ -71,4 +71,10 @@ ro.device.rear_cam=5 Megapixels
 ro.device.screen_res=480x800
 
 # adb service 
-persist.adb.notify=0
+# persist.adb.notify=0 i dont need for now.
+
+##### Doga s ADB Service ADDON #####
+persist.service.adb.enable=1
+persist.sys.usb.config=adb
+
+
