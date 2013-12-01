@@ -42,10 +42,6 @@ USE_CAMERA_STUB := true
 
 TARGET_BOOTLOADER_BOARD_NAME := primou
 
-BOARD_KERNEL_CMDLINE := no_console_suspend=1 androidboot.selinux=permissive
-BOARD_KERNEL_BASE := 0x14300000
-BOARD_KERNEL_PAGE_SIZE := 4096
-
 # GPS
 BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := primou
 BOARD_VENDOR_QCOM_GPS_LOC_API_AMSS_VERSION := 50000
@@ -77,8 +73,8 @@ BOARD_FLASH_BLOCK_SIZE := 262144
 TARGET_RELEASETOOLS_EXTENSIONS := device/htc/common
 
 # Kernel
-TARGET_KERNEL_SOURCE := kernel/htc/primou
-TARGET_KERNEL_CONFIG := primou_defconfig
+#TARGET_KERNEL_SOURCE := kernel/htc/primou
+#TARGET_KERNEL_CONFIG := primou_defconfig
 #TARGET_PREBUILT_KERNEL := device/htc/primou/prebuilt/root/kernel
 #BUILD_KERNEL := true
 #TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.4.3
@@ -99,8 +95,24 @@ BOARD_USES_MMCUTILS := false
 BOARD_HAS_NO_MISC_PARTITION := false
 
 BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
+# Primou Kernel Configuration
+TARGET_PREBUILT_KERNEL := device/htc/primou/kernel
+BOARD_KERNEL_CMDLINE :=  console=ttyHSL0,115200,no_console_suspend=1 ,n8 androidboot.hardware=primou
+BOARD_KERNEL_BASE :=  0x13F00000
+BOARD_KERNEL_PAGESIZE := 4096
 
-TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/class/android_usb/android0/f_mass_storage/lun0/file
+TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/class/android_usb/android0/f_mass_storage/lun%d/file
+
+# BOARD_UMS_LUNFILE := /sys/class/android_usb/f_mass_storage/lun0/file
+
+# Recovery:Start
+
+# Use this flag if the board has a ext4 partition larger than 2gb
+BOARD_HAS_LARGE_FILESYSTEM := true
+
+# Recovery: set depending on recovery being built for. (CWM or TWRP)
+#           both init scripts can be found in the recovery folder
+TARGET_RECOVERY_INITRC := device/htc/primou/recovery/init-cwm.rc
 
 # No SDK blobs
 BUILD_EMULATOR_SENSORS_MODULE := false

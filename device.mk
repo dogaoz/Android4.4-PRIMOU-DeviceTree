@@ -17,14 +17,7 @@
 # common msm7x30 configs
 $(call inherit-product, device/htc/msm7x30-common/msm7x30.mk)
 
-# GPS config
-PRODUCT_COPY_FILES += device/htc/primou/configs/gps.conf:system/etc/gps.conf
 
-# Ramdisk
-PRODUCT_COPY_FILES += \
-    device/htc/primou/ramdisk/init.primou.rc:root/init.primou.rc \
-    device/htc/primou/ramdisk/ueventd.primou.rc:root/ueventd.primou.rc \
-    device/htc/primou/ramdisk/fstab.primou:root/fstab.primou
 
 # Vendor
 $(call inherit-product-if-exists, vendor/htc/primou/primou-vendor.mk)
@@ -143,3 +136,31 @@ $(call inherit-product, device/htc/primou/media_htcaudio.mk)
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 $(call inherit-product, frameworks/native/build/phone-hdpi-512-dalvik-heap.mk)
+
+$(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
+
+# The gps config appropriate for this device
+$(call inherit-product, device/common/gps/gps_us_supl.mk)
+
+$(call inherit-product-if-exists, vendor/htc/primou/primou-vendor.mk)
+
+DEVICE_PACKAGE_OVERLAYS += device/htc/primou/overlay
+
+LOCAL_PATH := device/htc/primou
+ifeq ($(TARGET_PREBUILT_KERNEL),)
+	LOCAL_KERNEL := $(LOCAL_PATH)/kernel
+else
+	LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
+endif
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_KERNEL):kernel
+
+PRODUCT_COPY_FILES += \
+    device/htc/primou/recovery/sbin/choice_fn:recovery/root/sbin/choice_fn \
+    device/htc/primou/recovery/sbin/detect_key:recovery/root/sbin/detect_key \
+    device/htc/primou/recovery/sbin/offmode_charging:recovery/root/sbin/offmode_charging \
+    device/htc/primou/recovery/sbin/power_test:recovery/root/sbin/power_test \
+    device/htc/primou/recovery/sbin/postrecoveryboot.sh:recovery/root/sbin/postrecoveryboot.sh
+
+$(call inherit-product, build/target/product/full.mk)
