@@ -17,13 +17,13 @@ on early-fs
 
 on fs
    #mount all the things
-   mount_all fstab.primoc
+   mount_all fstab.primou
 
    setprop ro.crypto.tmpfs_options size=128m,mode=0771,uid=1000,gid=1000
 
 on emmc-fs
    #mount all the things
-   mount_all fstab.primoc
+   mount_all fstab.primou
 
 on post-fs
     chmod 0771 /cache

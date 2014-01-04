@@ -112,6 +112,7 @@ TARGET_KERNEL_SOURCE := kernel/htc/primou
 TARGET_KERNEL_CONFIG := primou_defconfig
 #TARGET_PREBUILT_KERNEL := device/htc/primou/kernel
 #BUILD_KERNEL := true
+#TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.4.3
 #TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.7
 
 BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,no_console_suspend=1 androidboot.selinux=permissive,n8 androidboot.hardware=primou
