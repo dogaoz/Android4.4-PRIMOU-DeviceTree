@@ -14,140 +14,130 @@
 # limitations under the License.
 #
 
+$(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
+
 # common msm7x30 configs
 $(call inherit-product, device/htc/msm7x30-common/msm7x30.mk)
 
-# GPS config
-PRODUCT_COPY_FILES += device/htc/primou/configs/gps.conf:system/etc/gps.conf
-
-# Ramdisk
+# The gps config appropriate for this device
 PRODUCT_COPY_FILES += \
-    device/htc/primou/ramdisk/init.primou.rc:root/init.primou.rc \
-    device/htc/primou/ramdisk/ueventd.primou.rc:root/ueventd.primou.rc \
-    device/htc/primou/ramdisk/fstab.primou:root/fstab.primou
+    device/htc/primou/prebuilt/etc/gps.conf:system/etc/gps.conf
 
-# Vendor
+# media
+PRODUCT_COPY_FILES += \
+    device/htc/primou/prebuilt/etc/media_codecs.xml:system/etc/media_codecs.xml \
+    device/htc/primou/prebuilt/etc/media_profiles.xml:system/etc/media_profiles.xml \
+    device/htc/primou/prebuilt/etc/audio_policy.conf:system/etc/audio_policy.conf
+
+## (1) First, the most specific values, i.e. the aspects that are specific to GSM
+
+PRODUCT_COPY_FILES += \
+    device/htc/primou/prebuilt/root/init.primou.rc:root/init.primou.rc \
+    device/htc/primou/prebuilt/root/init.usb.rc:root/init.usb.rc \
+    device/htc/primou/prebuilt/root/init.rc:root/init.rc \
+    device/htc/primou/prebuilt/root/ueventd.rc:root/ueventd.rc \
+    device/htc/primou/prebuilt/root/ueventd.primou.rc:root/ueventd.primou.rc
+
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml
+
+## (2) Also get non-open-source GSM-specific aspects if available
 $(call inherit-product-if-exists, vendor/htc/primou/primou-vendor.mk)
 
-# Misc. property overrides
+## (3)  Finally, the least specific parts, i.e. the non-GSM-specific aspects
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.com.google.locationfeatures=1 \
     ro.com.google.networklocation=1 \
     ro.com.google.gmsversion=2.3_r3 \
     dalvik.vm.lockprof.threshold=500 \
     dalvik.vm.dexopt-flags=m=y \
-    ro.sf.lcd_density=240 \
-    dalvik.vm.debug.alloc=0
-	
-
+    ro.sf.lcd_density=240
 
 # Override /proc/sys/vm/dirty_ratio on UMS
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.vold.umsdirtyratio=20
-
+	
 DEVICE_PACKAGE_OVERLAYS += device/htc/primou/overlay
 
-
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.telephony.cdma.xml:system/etc/permissions/android.hardware.telephony.cdma.xml
-
-# GPS / BT / Lights / Sensors
+# GPS / Lights / Sensors
 PRODUCT_PACKAGES += \
-    libbt-vendor \
     gps.primou \
-    librpc \
     lights.primou \
     sensors.primou
 
-# CFX Packages
+# Additional packages
 PRODUCT_PACKAGES += \
-    Torch \
-    make_ext4fs \
-    FileManager \
-    e2fsck \
-    setup_fs
+    EndeavoruParts 
+ 
 
-
-# Input device config
+# idc files
 PRODUCT_COPY_FILES += \
-    device/htc/primou/idc/himax-touchscreen.idc:system/usr/idc/himax-touchscreen.idc \
-    device/htc/primou/idc/primou-keypad.idc:system/usr/idc/primou-keypad.idc \
-    device/htc/primou/idc/qwerty.idc:system/usr/idc/qwerty.idc \
-    device/htc/primou/idc/qwerty2.idc:system/usr/idc/qwerty2.idc \
-    device/htc/primou/idc/synaptics-rmi-touchscreen.idc:system/usr/idc/synaptics-rmi-touchscreen.idc
+    device/htc/primou/prebuilt/usr/idc/atmel-touchscreen.idc:system/usr/idc/atmel-touchscreen.idc \
+    device/htc/primou/prebuilt/usr/idc/primou-keypad.idc:system/usr/idc/primou-keypad.idc \
+    device/htc/primou/prebuilt/usr/idc/qwerty.idc:system/usr/idc/qwerty.idc \
+    device/htc/primou/prebuilt/usr/idc/qwerty2.idc:system/usr/idc/qwerty2.idc \
+    device/htc/primou/prebuilt/usr/idc/synaptics-rmi-touchscreen.idc:system/usr/idc/synaptics-rmi-touchscreen.idc \
+    device/htc/primou/prebuilt/usr/keychars/Generic.kcm:system/usr/keychars/Generic.kcm \
+    device/htc/primou/prebuilt/usr/keychars/qwerty.kcm:system/usr/keychars/qwerty.kcm \
+    device/htc/primou/prebuilt/usr/keychars/qwerty2.kcm:system/usr/keychars/qwerty2.kcm \
+    device/htc/primou/prebuilt/usr/keychars/Virtual.kcm:system/usr/keychars/Virtual.kcm \
+    device/htc/primou/prebuilt/usr/keylayout/atmel-touchscreen.kl:system/usr/keylayout/atmel-touchscreen.kl \
+    device/htc/primou/prebuilt/usr/keylayout/AVRCP.kl:system/usr/keylayout/AVRCP.kl \
+    device/htc/primou/prebuilt/usr/keylayout/h2w_headset.kl:system/usr/keylayout/h2w_headset.kl \
+    device/htc/primou/prebuilt/usr/keylayout/primou-keypad.kl:system/usr/keylayout/primou-keypad.kl \
+    device/htc/primou/prebuilt/usr/keylayout/qwerty.kl:system/usr/keylayout/qwerty.kl \
+    device/htc/primou/prebuilt/usr/keylayout/synaptics-rmi-touchscreen.kl:system/usr/keylayout/synaptics-rmi-touchscreen.kl
 
-# Keylayouts and keychars
 PRODUCT_COPY_FILES += \
-    device/htc/primou/keylayout/keychars/Generic.kcm:system/usr/keychars/Generic.kcm \
-    device/htc/primou/keylayout/keychars/qwerty.kcm:system/usr/keychars/qwerty.kcm \
-    device/htc/primou/keylayout/keychars/qwerty2.kcm:system/usr/keychars/qwerty2.kcm \
-    device/htc/primou/keylayout/keychars/Virtual.kcm:system/usr/keychars/Virtual.kcm \
-    device/htc/primou/keylayout/keylayout/himax-touchscreen.kl:system/usr/keylayout/himax-touchscreen.kl \
-    device/htc/primou/keylayout/keylayout/AVRCP.kl:system/usr/keylayout/AVRCP.kl \
-    device/htc/primou/keylayout/keylayout/h2w_headset.kl:system/usr/keylayout/h2w_headset.kl \
-    device/htc/primou/keylayout/keylayout/primou-keypad.kl:system/usr/keylayout/primou-keypad.kl \
-    device/htc/primou/keylayout/keylayout/qwerty.kl:system/usr/keylayout/qwerty.kl \
-    device/htc/primou/keylayout/keylayout/synaptics-rmi-touchscreen.kl:system/usr/keylayout/synaptics-rmi-touchscreen.kl
+    device/htc/primou/prebuilt/etc/vold.fstab:system/etc/vold.fstab
 
-# Inherit qcom proprietary blobs
-$(call inherit-product, vendor/qcom/proprietary/qcom-vendor.mk)
-
-# ACDB
+# init.d files
 PRODUCT_COPY_FILES += \
-    device/htc/primou/configs/default.acdb:system/etc/firmware/default.acdb \
-    device/htc/primou/configs/default_org.acdb:system/etc/firmware/default_org.acdb
+    device/htc/primou/prebuilt/etc/init.d/01swap:system/etc/init.d/01swap
 
-# Audio DSP Profiles
+# patched zram scripts
 PRODUCT_COPY_FILES += \
-    device/htc/primou/dsp/AdieHWCodec.csv:system/etc/AdieHWCodec.csv \
-    device/htc/primou/dsp/AIC3254_REG.csv:system/etc/AIC3254_REG.csv \
-    device/htc/primou/dsp/CodecDSPID.txt:system/etc/CodecDSPID.txt \
-    device/htc/primou/dsp/TPA2051_CFG.csv:system/etc/TPA2051_CFG.csv 
-	
+    device/htc/primou/prebuilt/bin/compcache:system/bin/compcache \
+    device/htc/primou/prebuilt/bin/handle_compcache:system/bin/handle_compcache
 
-$(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4330/device-bcm.mk)
-
-# BCM4330 firmware
+# bluez config
 PRODUCT_COPY_FILES += \
-    device/htc/primou/firmware/bcm4330.hcd:system/etc/firmware/bcm4330.hcd \
-    device/htc/primou/firmware/fw_bcm4330_apsta_b1.bin:system/etc/firmware/fw_bcm4330_apsta_b1.bin \
-    device/htc/primou/firmware/fw_bcm4330_apsta_b2.bin:system/etc/firmware/fw_bcm4330_apsta_b2.bin \
-    device/htc/primou/firmware/fw_bcm4330_b2.bin:system/etc/firmware/fw_bcm4330_b2.bin \
-    device/htc/primou/firmware/fw_bcm4330_b1.bin:system/etc/firmware/fw_bcm4330_b1.bin \
-    device/htc/primou/firmware/fw_bcm4330_p2p_b2.bin:system/etc/firmware/fw_bcm4330_p2p_b2.bin \
-    device/htc/primou/firmware/fw_bcm4330_p2p_b1.bin:system/etc/firmware/fw_bcm4330_p2p_b1.bin \
-    device/htc/primou/firmware/calibration:system/etc/calibration
+    device/htc/primou/prebuilt/etc/dbus.conf:system/etc/dbus.conf \
+    device/htc/primou/prebuilt/etc/dbus-1/system-services/org.bluez.service:system/etc/dbus-1/system-services/org.bluez.service \
+    device/htc/primou/prebuilt/bt_vendor.conf:system/etc/bluetooth/bt_vendor.conf
 
-# Kernel
 ifeq ($(TARGET_PREBUILT_KERNEL),)
-        LOCAL_KERNEL := device/htc/primou/kernel
+LOCAL_KERNEL := device/htc/primou/prebuilt/root/kernel
+else
+LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
+endif
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_KERNEL):kernel
-endif
+
+# Device uses high-density artwork where available
+PRODUCT_AAPT_CONFIG := normal hdpi
+PRODUCT_AAPT_PREF_CONFIG := hdpi
+PRODUCT_LOCALES += en_GB
+
+
+$(call inherit-product, build/target/product/full_base.mk)
+
+# Camera
+#PRODUCT_PACKAGES := \
+    Camera
+
+## Recovery
 
 PRODUCT_COPY_FILES += \
     device/htc/primou/recovery/sbin/choice_fn:recovery/root/sbin/choice_fn \
     device/htc/primou/recovery/sbin/detect_key:recovery/root/sbin/detect_key \
     device/htc/primou/recovery/sbin/offmode_charging:recovery/root/sbin/offmode_charging \
-    device/htc/primou/recovery/sbin/power_test:recovery/root/sbin/power_test \
-    device/htc/primou/recovery/sbin/postrecoveryboot.sh:recovery/root/sbin/postrecoveryboot.sh
-
-
-# Enable Low Ram Device flag => http://source.android.com/devices/low-ram.html
-#PRODUCT_PROPERTY_OVERRIDES += \
-    ro.config.low_ram=true
-# Disable JIT
-#PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.jit.codecachesize=0
-
-# Turn off ZRAM by default
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.zram.default=0
+    device/htc/primou/recovery/sbin/power_test:recovery/root/sbin/power_test
 
 # HTC Audio
 $(call inherit-product, device/htc/primou/media_a1026.mk)
 $(call inherit-product, device/htc/primou/media_htcaudio.mk)
 
-$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 $(call inherit-product, frameworks/native/build/phone-hdpi-512-dalvik-heap.mk)
