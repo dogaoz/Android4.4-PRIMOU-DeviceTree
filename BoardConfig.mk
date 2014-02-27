@@ -33,7 +33,7 @@
 
 TARGET_BOOTLOADER_BOARD_NAME := primou
 
-BOARD_KERNEL_CMDLINE := console=ttyHSL0 androidboot.hardware=primou no_console_suspend=1
+BOARD_KERNEL_CMDLINE := console=ttyHSL0 androidboot.hardware=primou androidboot.selinux=permissive no_console_suspend=1
 BOARD_KERNEL_BASE := 0x14300000
 BOARD_KERNEL_PAGE_SIZE := 4096
 
